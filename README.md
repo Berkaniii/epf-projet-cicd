@@ -1,6 +1,6 @@
 # epf-app — base commune du Projet CI/CD
 
-![CI](https://github.com/<organisation>/<depot>/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Berkaniii/epf-projet-cicd/actions/workflows/ci.yml/badge.svg)
 
 Point de départ de toutes les équipes : une petite API Express, sa chaîne d'intégration
 continue et sa publication d'image. Vous y ajouterez, séance après séance, le monitoring,
