@@ -72,3 +72,18 @@ jobs:
         with:
           persist-credentials: false
       - run: docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:1.179.0 semgrep scan --error --config p/javascript
+
+      # --- Alerte Discord en cas d'échec ---
+
+  notify-discord:
+    needs: [lint, test, build, secrets, dependances, sast]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Envoyer l'alerte sur Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d "{\"content\": \"🚨 **Échec de la CI** sur le dépôt **${{ github.repository }}** (branche \`${{ github.ref_name }}\`) ! Voir les logs : ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+               "$DISCORD_WEBHOOK"
